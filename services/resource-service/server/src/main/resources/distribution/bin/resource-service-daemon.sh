@@ -40,8 +40,8 @@ case $1 in
     start)
         echo "Starting $SERVICE_NAME ..."
         if [ ! -f $PID_PATH_NAME ]; then
-            nohup java ${JAVA_OPTS} -classpath "${AIRAVATA_CLASSPATH}" \
-            org.apache.airavata.mft.resource.server.ResourceServiceApplication ${AIRAVATA_COMMAND} $* > $LOG_FILE 2>&1 &
+            java ${JAVA_OPTS} -classpath "${AIRAVATA_CLASSPATH}" \
+            org.apache.airavata.mft.resource.server.ResourceServiceApplication ${AIRAVATA_COMMAND}
             echo $! > $PID_PATH_NAME
             echo "$SERVICE_NAME started ..."
         else
@@ -89,8 +89,8 @@ case $1 in
             echo "$SERVICE_NAME stopped ...";
             rm $PID_PATH_NAME
             echo "$SERVICE_NAME starting ..."
-            nohup java ${JAVA_OPTS} -classpath "${AIRAVATA_CLASSPATH}" \
-            org.apache.airavata.mft.resource.server.ResourceServiceApplication ${AIRAVATA_COMMAND} $* > $LOG_FILE 2>&1 &
+            java ${JAVA_OPTS} -classpath "${AIRAVATA_CLASSPATH}" \
+            org.apache.airavata.mft.resource.server.ResourceServiceApplication ${AIRAVATA_COMMAND}
             echo $! > $PID_PATH_NAME
             echo "$SERVICE_NAME started ..."
         else

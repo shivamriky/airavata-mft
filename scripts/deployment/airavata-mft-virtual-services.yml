@@ -1,0 +1,66 @@
+############################################################################
+# api virtual service
+############################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: api
+spec:
+  hosts:
+    - api
+  http:
+    - route:
+        - destination:
+            host: api
+            subset: v1
+---
+
+############################################################################
+# resource virtual service
+############################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: resource
+spec:
+  hosts:
+    - resource
+  http:
+    - route:
+        - destination:
+            host: resource
+            subset: v1
+---
+
+############################################################################
+# resource virtual service
+############################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: secret
+spec:
+  hosts:
+    - secret
+  http:
+    - route:
+        - destination:
+            host: secret
+            subset: v1
+---
+
+############################################################################
+# consul virtual service
+############################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: consul
+spec:
+  hosts:
+    - consul
+  http:
+    - route:
+        - destination:
+            host: consul
+---
