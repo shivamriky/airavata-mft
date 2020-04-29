@@ -8,4 +8,4 @@ RUN unzip Resource-Service-0.01-bin.zip
 RUN ls
 WORKDIR /usr/app/Resource-Service-0.01/bin
 RUN ls 
-CMD sh resources-service-daemon.sh start
+CMD sh resource-service-daemon.sh start
