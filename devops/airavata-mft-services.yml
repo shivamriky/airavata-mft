@@ -1,0 +1,244 @@
+############################################################################
+# api service
+############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  labels:
+    app: api
+    service: api
+spec:
+  type: NodePort
+  ports:
+    - port: 7004
+      name: grpc
+  selector:
+    app: api
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mft-api
+  labels:
+    account: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-v1
+  labels:
+    app: api
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: api
+        version: v1
+    spec:
+      serviceAccountName: mft-api
+      containers:
+        - name: api
+          image: docker.io/airavata-mft/api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7004
+---
+############################################################################
+# controller
+############################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-v1
+  labels:
+    app: controller
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: controller
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: controller
+        version: v1
+    spec:
+      containers:
+        - name: controller
+          image: docker.io/airavata-mft/controller
+          imagePullPolicy: Always
+---
+############################################################################
+# resource service
+############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: resource
+  labels:
+    app: resource
+    service: resource
+spec:
+  ports:
+    - port: 7002
+      name: grpc
+  selector:
+    app: resource
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mft-resource
+  labels:
+    account: resource
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-v1
+  labels:
+    app: resource
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: resource
+        version: v1
+    spec:
+      serviceAccountName: mft-resource
+      containers:
+        - name: resource
+          image: docker.io/airavata-mft/resource
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7002
+---
+############################################################################
+# secret service
+############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: secret
+  labels:
+    app: secret
+    service: secret
+spec:
+  ports:
+    - port: 7003
+      name: grpc
+  selector:
+    app: secret
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mft-secret
+  labels:
+    account: secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-v1
+  labels:
+    app: secret
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: secret
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: secret
+        version: v1
+    spec:
+      serviceAccountName: mft-secret
+      containers:
+        - name: secret
+          image: docker.io/airavata-mft/secret
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7003
+---
+############################################################################
+# agent
+############################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-v1
+  labels:
+    app: agent
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: agent
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: agent
+        version: v1
+    spec:
+      containers:
+        - name: agent
+          image: docker.io/airavata-mft/agent
+          imagePullPolicy: Always
+---
+############################################################################
+# consul service
+############################################################################
+kind: Service
+apiVersion: v1
+metadata:
+  name: consul
+spec:
+  selector:
+    app: consul
+  ports:
+    - protocol: TCP
+      port: 8500
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul-deployment
+  labels:
+    app: consul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consul
+  template:
+    metadata:
+      labels:
+        app: consul
+    spec:
+      containers:
+        - name: consul
+          image: consul
+          ports:
+            - containerPort: 8500
+---
