@@ -1,0 +1,40 @@
+---
+version: '2'
+services:
+  consul:
+    image: consul:latest
+    ports:
+      - 8500:8500
+      - 8600:8600/udp
+    command: agent -dev -ui -client=0.0.0.0
+
+  mft-controller:
+    build: ../controller
+    ports:
+      - 9093:9093
+    depends_on:
+      - consul
+
+  mft-resource-service:
+    build: ../services/resource-service/server
+    ports:
+      - 7002:7002
+
+  mft-secret-service:
+    build: ../services/secret-service/server
+    ports:
+      - 7003:7003
+
+  mft-agent:
+    build: ../agent
+    ports:
+     - 9094:9094
+    depends_on:
+      - consul
+
+  mft-api:
+    build: ../api/service
+    ports:
+      - 7004:7004
+    depends_on:
+      - consul
