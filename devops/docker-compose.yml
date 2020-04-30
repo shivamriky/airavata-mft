@@ -9,6 +9,7 @@ services:
     command: agent -dev -ui -client=0.0.0.0
 
   mft-controller:
+    image: squadronteam/mft-controller:latest
     build: ../controller
     ports:
       - 9093:9093
@@ -16,16 +17,19 @@ services:
       - consul
 
   mft-resource-service:
+    image: squadronteam/mft-resource-service:latest
     build: ../services/resource-service/server
     ports:
       - 7002:7002
 
   mft-secret-service:
+    image: squadronteam/mft-secret-service:latest
     build: ../services/secret-service/server
     ports:
       - 7003:7003
 
   mft-agent:
+    image: squadronteam/mft-agent:latest
     build: ../agent
     ports:
      - 9094:9094
@@ -35,6 +39,7 @@ services:
       - mft-resource-service
 
   mft-api:
+    image: squadronteam/mft-api:latest
     build: ../api/service
     ports:
       - 7004:7004
