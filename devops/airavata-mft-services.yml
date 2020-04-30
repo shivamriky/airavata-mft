@@ -1,0 +1,217 @@
+############################################################################
+# api service
+############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: mft-api
+  labels:
+    app: mft-api
+spec:
+  type: NodePort
+  ports:
+    - port: 7004
+      name: grpc
+  selector:
+    app: mft-api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-v1
+  labels:
+    app: mft-api
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-api
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mft-api
+        version: v1
+    spec:
+      containers:
+        - name: mft-api
+          image: squadronteam/mft-api
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7004
+---
+############################################################################
+# controller
+############################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-v1
+  labels:
+    app: mft-controller
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-controller
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mft-controller
+        version: v1
+    spec:
+      containers:
+        - name: mft-controller
+          image: squadronteam/mft-controller
+          imagePullPolicy: Always
+---
+############################################################################
+# resource service
+############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: mft-resource-service
+  labels:
+    app: mft-resource-service
+spec:
+  ports:
+    - port: 7002
+      name: grpc
+  selector:
+    app: mft-resource-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-v1
+  labels:
+    app: mft-resource-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-resource-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mft-resource-service
+        version: v1
+    spec:
+      containers:
+        - name: mft-resource-service
+          image: squadronteam/mft-resource-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7002
+---
+############################################################################
+# secret service
+############################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: mft-secret-service
+  labels:
+    app: mft-secret-service
+spec:
+  ports:
+    - port: 7003
+      name: grpc
+  selector:
+    app: mft-secret-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-v1
+  labels:
+    app: mft-secret-service
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-secret-service
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mft-secret-service
+        version: v1
+    spec:
+      containers:
+        - name: mft-secret-service
+          image: squadronteam/mft-secret-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7003
+---
+############################################################################
+# agent
+############################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: agent-v1
+  labels:
+    app: mft-agent
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-agent
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: mft-agent
+        version: v1
+    spec:
+      containers:
+        - name: mft-agent
+          image: squadronteam/mft-agent
+          imagePullPolicy: Always
+---
+############################################################################
+# consul service
+############################################################################
+kind: Service
+apiVersion: v1
+metadata:
+  name: mft-consul
+spec:
+  selector:
+    app: mft-consul
+  ports:
+    - protocol: TCP
+      port: 8500
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consul-deployment
+  labels:
+    app: mft-consul
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-consul
+  template:
+    metadata:
+      labels:
+        app: mft-consul
+    spec:
+      containers:
+        - name: mft-consul
+          image: consul
+          ports:
+            - containerPort: 8500
+---
