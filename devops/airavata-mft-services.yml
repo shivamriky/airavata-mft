@@ -185,10 +185,10 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: consul
+  name: mft-consul
 spec:
   selector:
-    app: consul
+    app: mft-consul
   ports:
     - protocol: TCP
       port: 8500
@@ -198,19 +198,19 @@ kind: Deployment
 metadata:
   name: consul-deployment
   labels:
-    app: consul
+    app: mft-consul
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: consul
+      app: mft-consul
   template:
     metadata:
       labels:
-        app: consul
+        app: mft-consul
     spec:
       containers:
-        - name: consul
+        - name: mft-consul
           image: consul
           ports:
             - containerPort: 8500

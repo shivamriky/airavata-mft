@@ -1,7 +1,7 @@
 ---
 version: '2'
 services:
-  consul:
+  mft-consul:
     image: consul:latest
     ports:
       - 8500:8500
@@ -14,7 +14,7 @@ services:
     ports:
       - 9093:9093
     depends_on:
-      - consul
+      - mft-consul
 
   mft-resource-service:
     image: squadronteam/mft-resource-service:latest
@@ -34,7 +34,7 @@ services:
     ports:
      - 9094:9094
     depends_on:
-      - consul
+      - mft-consul
       - mft-secret-service
       - mft-resource-service
 
@@ -44,6 +44,6 @@ services:
     ports:
       - 7004:7004
     depends_on:
-      - consul
+      - mft-consul
       - mft-resource-service
       - mft-secret-service
