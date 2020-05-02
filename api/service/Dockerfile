@@ -8,4 +8,4 @@ RUN unzip API-Service-0.01-bin.zip
 RUN ls
 WORKDIR /usr/app/API-Service-0.01/bin
 RUN ls 
-CMD sh api-service-daemon.sh start
+CMD sh api-service.sh start

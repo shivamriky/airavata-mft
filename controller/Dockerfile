@@ -8,4 +8,4 @@ RUN unzip MFT-Controller-0.01-bin.zip
 RUN ls
 WORKDIR /usr/app/MFT-Controller-0.01/bin
 RUN ls 
-CMD sh controller-daemon.sh start
+CMD sh controller.sh start

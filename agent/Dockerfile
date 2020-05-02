@@ -8,4 +8,4 @@ RUN unzip MFT-Agent-0.01-bin.zip
 RUN ls
 WORKDIR /usr/app/MFT-Agent-0.01/bin
 RUN ls 
-CMD sh agent-daemon.sh start
+CMD sh agent.sh start

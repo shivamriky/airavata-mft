@@ -8,4 +8,4 @@ RUN unzip Secret-Service-0.01-bin.zip
 RUN ls
 WORKDIR /usr/app/Secret-Service-0.01/bin
 RUN ls 
-CMD sh secret-service-daemon.sh start
+CMD sh secret-service.sh start
