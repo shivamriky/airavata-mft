@@ -1,0 +1,22 @@
+apiVersion: "security.istio.io/v1beta1"
+kind: "PeerAuthentication"
+metadata:
+  name: "mft-strict-policy"
+  namespace: "default"
+spec:
+  mtls:
+    mode: STRICT
+    
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "PeerAuthentication"
+metadata:
+  name: "mft-api-exception-workload-policy"
+  namespace: "default"
+spec:
+  selector:
+     matchLabels:
+       app: mft-api
+  portLevelMtls:
+    7004:
+      mode: DISABLE
