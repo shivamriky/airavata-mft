@@ -16,13 +16,19 @@ docker-compose ps
 
 ### Deploy pods and services
 ```
-kubectl apply -f 
+kubectl apply -f airavata-mft-services-deployments.yml
 ```
 
-### Deploy virtual services and 
+### Deploy virtual services and destination rules
 
 ```
-kubectl apply -f
+kubectl apply -f airavata-mft-virtual-services.yml
+```
+
+### Enable authentication between services
+
+```
+kubectl apply -f airavata-mft-authentication-policy.yml
 ```
 
 
