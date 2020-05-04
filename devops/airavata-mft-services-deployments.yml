@@ -110,6 +110,32 @@ spec:
           ports:
             - containerPort: 7002
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-v2
+  labels:
+    app: mft-resource-service
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-resource-service
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: mft-resource-service
+        version: v2
+    spec:
+      containers:
+        - name: mft-resource-service
+          image: squadronteam/mft-resource-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7002
+---
 ############################################################################
 # secret service
 ############################################################################
@@ -144,6 +170,32 @@ spec:
       labels:
         app: mft-secret-service
         version: v1
+    spec:
+      containers:
+        - name: mft-secret-service
+          image: squadronteam/mft-secret-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7003
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: secret-v2
+  labels:
+    app: mft-secret-service
+    version: v2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mft-secret-service
+      version: v2
+  template:
+    metadata:
+      labels:
+        app: mft-secret-service
+        version: v2
     spec:
       containers:
         - name: mft-secret-service
